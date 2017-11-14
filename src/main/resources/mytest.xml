@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:jack="http://www.dongnaoedu.com/schema/soa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	   http://www.dongnaoedu.com/schema/soa 
+	   http://www.dongnaoedu.com/schema/soa.xsd"
+       default-lazy-init="true">
+	<!--<bean id="testServiceImpl" class="com.dongnao.jack.test.service.TestServiceImpl"></bean>
+	<bean id="testServiceImpl2" class="com.dongnao.jack.test.service.Test2ServiceImpl"></bean>
+ 	
+ 	<jack:service id="service1" interface="com.dongnao.jack.test.service.TestService" ref="testServiceImpl"></jack:service>
+ 	<jack:service id="service2" interface="com.dongnao.jack.test.service.Test2Service" ref="testServiceImpl2"></jack:service>-->
+ 	<jack:registry  protocol="redis" address="127.0.0.1:6379"></jack:registry>
+ 	<jack:reference id="testServiceImpl3" interface="com.dongnao.jack.test.service.TestService" loadbalance="random" protocol="http"></jack:reference>
+ 	<jack:protocol  name="http" port="27017" host="127.0.0.1"></jack:protocol>
+ 	
+ 	<!--<jack:service interface="com.dongnao.jack.test.service.TestService" ref="testServiceImpl1"  protocol="rmi"></jack:service>
+ 	
+ 	<jack:service interface="com.dongnao.jack.test.service.TestService" ref="testServiceImpl2" protocol="netty"></jack:service>
+ 	
+ 	<jack:service interface="com.dongnao.jack.test.service.TestService" ref="testServiceImpl3" protocol="http"></jack:service>
+ 	
+ 	<jack:service interface="com.dongnao.jack.test.service.TestService" ref="testServiceImpl4" protocol="http"></jack:service>-->
+</beans>  

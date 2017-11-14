@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.dongnaoedu.com/schema/soa"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.dongnaoedu.com/schema/soa"
+ elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:element name="registry">
+		<xsd:complexType>
+			<xsd:attribute name="protocol" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="address" type="xsd:string"></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="reference">
+		<xsd:complexType>
+			<xsd:attribute name="id" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="interface" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="loadbalance" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="protocol" type="xsd:string"></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="protocol">
+		<xsd:complexType>
+			<xsd:attribute name="name" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="port" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="host" type="xsd:string"></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="service">
+		<xsd:complexType>
+			<xsd:attribute name="interface" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="ref" type="xsd:string"></xsd:attribute>
+			<xsd:attribute name="protocol" type="xsd:string"></xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
