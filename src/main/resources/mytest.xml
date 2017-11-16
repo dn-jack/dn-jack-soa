@@ -14,7 +14,7 @@
  	<jack:service id="service2" interface="com.dongnao.jack.test.service.Test2Service" ref="testServiceImpl2"></jack:service>-->
  	<jack:registry  protocol="redis" address="127.0.0.1:6379"></jack:registry>
  	<jack:reference id="testServiceImpl3" interface="com.dongnao.jack.test.service.TestService" loadbalance="random" protocol="http"></jack:reference>
- 	<jack:protocol  name="http" port="27017" host="127.0.0.1"></jack:protocol>
+ 	<jack:protocol  name="rmi" port="27017" host="127.0.0.1"></jack:protocol>
  	
  	<!--<jack:service interface="com.dongnao.jack.test.service.TestService" ref="testServiceImpl1"  protocol="rmi"></jack:service>
  	
