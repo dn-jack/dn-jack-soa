@@ -14,6 +14,7 @@ import org.springframework.context.ApplicationContextAware;
 
 import com.dongnao.jack.invoke.HttpInvoke;
 import com.dongnao.jack.invoke.Invoke;
+import com.dongnao.jack.invoke.RmiInvoke;
 import com.dongnao.jack.loadbalance.LoadBalance;
 import com.dongnao.jack.loadbalance.RandomLoadBalance;
 import com.dongnao.jack.loadbalance.RoundRobinLoadBalance;
@@ -51,7 +52,7 @@ public class Reference extends BaseConfigBean implements FactoryBean,
     
     static {
         invokes.put("http", new HttpInvoke());
-        invokes.put("rmi", null);
+        invokes.put("rmi", new RmiInvoke());
         
         loadBalances.put("romdom", new RandomLoadBalance());
         loadBalances.put("roundrob", new RoundRobinLoadBalance());

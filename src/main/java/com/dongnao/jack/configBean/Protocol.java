@@ -5,6 +5,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import com.dongnao.jack.rmi.RmiUtil;
+
 public class Protocol extends BaseConfigBean implements InitializingBean,
         ApplicationContextAware {
     
@@ -67,6 +69,10 @@ public class Protocol extends BaseConfigBean implements InitializingBean,
     }
     
     public void afterPropertiesSet() throws Exception {
+        if (name.equalsIgnoreCase("rmi")) {
+            RmiUtil rmi = new RmiUtil();
+            rmi.startRmiServer(host, port, "jacksoarmi");
+        }
     }
     
 }
