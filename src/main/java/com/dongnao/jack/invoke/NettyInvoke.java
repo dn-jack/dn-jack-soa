@@ -1,22 +1,14 @@
 package com.dongnao.jack.invoke;
 
-import java.rmi.RemoteException;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dongnao.jack.configBean.Reference;
 import com.dongnao.jack.loadbalance.LoadBalance;
 import com.dongnao.jack.loadbalance.NodeInfo;
-import com.dongnao.jack.rmi.RmiUtil;
-import com.dongnao.jack.rmi.SoaRmi;
+import com.dongnao.jack.netty.NettyUtil;
 
-/** 
- * @Description RMi的通讯协议
- * @ClassName   RmiInvoke 
- * @Date        2017年11月16日 下午9:51:47 
- * @Author      dn-jack 
- */
-public class RmiInvoke implements Invoke {
+public class NettyInvoke implements Invoke {
     
     public String invoke(Invocation invocation) throws Exception {
         try {
@@ -41,13 +33,13 @@ public class RmiInvoke implements Invoke {
             sendparam.put("paramTypes", invocation.getMethod()
                     .getParameterTypes());
             
-            RmiUtil rmi = new RmiUtil();
-            SoaRmi soarmi = rmi.startRmiClient(nodeinfo, "jacksoarmi");
-            
-            return soarmi.invoke(sendparam.toJSONString());
+            return NettyUtil.sendMsg(nodeinfo.getHost(),
+                    nodeinfo.getPort(),
+                    sendparam.toJSONString());
         }
-        catch (RemoteException e) {
+        catch (Exception e) {
             throw e;
         }
     }
+    
 }

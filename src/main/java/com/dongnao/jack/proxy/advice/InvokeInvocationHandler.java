@@ -3,6 +3,7 @@ package com.dongnao.jack.proxy.advice;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+import com.dongnao.jack.cluster.Cluster;
 import com.dongnao.jack.configBean.Reference;
 import com.dongnao.jack.invoke.Invocation;
 import com.dongnao.jack.invoke.Invoke;
@@ -35,7 +36,10 @@ public class InvokeInvocationHandler implements InvocationHandler {
         invocation.setMethod(method);
         invocation.setObjs(args);
         invocation.setReference(reference);
-        String result = invoke.invoke(invocation);
+        invocation.setInvoke(invoke);
+        //        String result = invoke.invoke(invocation);
+        Cluster cluster = reference.getClusters().get(reference.getCluster());
+        String result = cluster.invoke(invocation);
         return result;
     }
 }

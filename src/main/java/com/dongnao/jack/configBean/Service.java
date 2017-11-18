@@ -52,6 +52,8 @@ public class Service extends BaseConfigBean implements InitializingBean,
     
     public void afterPropertiesSet() throws Exception {
         BaseRegistryDelegate.registry(ref, application);
+        
+        //        RedisApi.publish("channel" + ref, "这个内容要跟redis里面的节点容易一直");
     }
     
     public String getProtocol() {
