@@ -10,6 +10,8 @@ public class Invocation {
     
     private Object[] objs;
     
+    private Invoke invoke;
+    
     private Reference reference;
     
     public Method getMethod() {
@@ -34,6 +36,14 @@ public class Invocation {
     
     public void setReference(Reference reference) {
         this.reference = reference;
+    }
+    
+    public Invoke getInvoke() {
+        return invoke;
+    }
+    
+    public void setInvoke(Invoke invoke) {
+        this.invoke = invoke;
     }
     
 }

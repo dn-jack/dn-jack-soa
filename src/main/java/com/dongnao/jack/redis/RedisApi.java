@@ -9,6 +9,7 @@ import java.util.Properties;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.JedisPubSub;
 
 public class RedisApi {
     
@@ -87,6 +88,34 @@ public class RedisApi {
     public static void returnResource(JedisPool pool, Jedis redis) {
         if (redis != null) {
             pool.returnResource(redis);
+        }
+    }
+    
+    public static void publish(String channel, String msg) {
+        Jedis jedis = null;
+        try {
+            jedis = pool.getResource();
+            jedis.publish(channel, msg);
+        }
+        catch (Exception e) {
+            
+        }
+        finally {
+            returnResource(pool, jedis);
+        }
+    }
+    
+    public static void subsribe(String channel, JedisPubSub ps) {
+        Jedis jedis = null;
+        try {
+            jedis = pool.getResource();
+            jedis.subscribe(ps, channel);
+        }
+        catch (Exception e) {
+            
+        }
+        finally {
+            returnResource(pool, jedis);
         }
     }
     

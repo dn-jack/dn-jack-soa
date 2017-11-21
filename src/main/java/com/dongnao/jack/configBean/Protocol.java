@@ -4,11 +4,14 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 
+import com.dongnao.jack.netty.NettyUtil;
 import com.dongnao.jack.rmi.RmiUtil;
 
 public class Protocol extends BaseConfigBean implements InitializingBean,
-        ApplicationContextAware {
+        ApplicationContextAware, ApplicationListener<ContextRefreshedEvent> {
     
     /** 
      * @Fields serialVersionUID TODO 
@@ -75,4 +78,28 @@ public class Protocol extends BaseConfigBean implements InitializingBean,
         }
     }
     
+    /* 
+     * @see ContextRefreshedEvent这个事件是spring启动完成以后触发的事件
+     */
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        if (!ContextRefreshedEvent.class.getName().equals(event.getClass()
+                .getName())) {
+            return;
+        }
+        
+        if (!"netty".equalsIgnoreCase(name)) {
+            return;
+        }
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    NettyUtil.startServer(port);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            
+        }).start();
+    }
 }

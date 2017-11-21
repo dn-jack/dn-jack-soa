@@ -12,8 +12,13 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import com.dongnao.jack.cluster.Cluster;
+import com.dongnao.jack.cluster.FailfastClusterInvoke;
+import com.dongnao.jack.cluster.FailoverClusterInvoke;
+import com.dongnao.jack.cluster.FailsafeClusterInvoke;
 import com.dongnao.jack.invoke.HttpInvoke;
 import com.dongnao.jack.invoke.Invoke;
+import com.dongnao.jack.invoke.NettyInvoke;
 import com.dongnao.jack.invoke.RmiInvoke;
 import com.dongnao.jack.loadbalance.LoadBalance;
 import com.dongnao.jack.loadbalance.RandomLoadBalance;
@@ -36,6 +41,10 @@ public class Reference extends BaseConfigBean implements FactoryBean,
     
     private String protocol;
     
+    private String cluster;
+    
+    private String retries;
+    
     private static ApplicationContext application;
     
     private Invoke invoke;
@@ -43,6 +52,8 @@ public class Reference extends BaseConfigBean implements FactoryBean,
     private static Map<String, Invoke> invokes = new HashMap<String, Invoke>();
     
     private static Map<String, LoadBalance> loadBalances = new HashMap<String, LoadBalance>();
+    
+    private static Map<String, Cluster> clusters = new HashMap<String, Cluster>();
     
     /** 
      * @Fields registryInfo 这个是生产者的多个服务的列表 
@@ -53,9 +64,14 @@ public class Reference extends BaseConfigBean implements FactoryBean,
     static {
         invokes.put("http", new HttpInvoke());
         invokes.put("rmi", new RmiInvoke());
+        invokes.put("netty", new NettyInvoke());
         
         loadBalances.put("romdom", new RandomLoadBalance());
         loadBalances.put("roundrob", new RoundRobinLoadBalance());
+        
+        clusters.put("failover", new FailoverClusterInvoke());
+        clusters.put("failfast", new FailfastClusterInvoke());
+        clusters.put("failsafe", new FailsafeClusterInvoke());
     }
     
     public List<String> getRegistryInfo() {
@@ -143,6 +159,9 @@ public class Reference extends BaseConfigBean implements FactoryBean,
     public void afterPropertiesSet() throws Exception {
         registryInfo = BaseRegistryDelegate.getRegistry(id, application);
         System.out.println(registryInfo);
+        
+        //完成订阅
+        //        RedisApi.subsribe("channel" + id, new RedisServerRegistry());
     }
     
     public static Map<String, LoadBalance> getLoadBalances() {
@@ -151,6 +170,30 @@ public class Reference extends BaseConfigBean implements FactoryBean,
     
     public static void setLoadBalances(Map<String, LoadBalance> loadBalances) {
         Reference.loadBalances = loadBalances;
+    }
+    
+    public String getCluster() {
+        return cluster;
+    }
+    
+    public void setCluster(String cluster) {
+        this.cluster = cluster;
+    }
+    
+    public String getRetries() {
+        return retries;
+    }
+    
+    public void setRetries(String retries) {
+        this.retries = retries;
+    }
+    
+    public static Map<String, Cluster> getClusters() {
+        return clusters;
+    }
+    
+    public static void setClusters(Map<String, Cluster> clusters) {
+        Reference.clusters = clusters;
     }
     
 }

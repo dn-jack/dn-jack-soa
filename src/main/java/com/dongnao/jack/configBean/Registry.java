@@ -42,7 +42,7 @@ public class Registry extends BaseConfigBean implements InitializingBean,
     //    }
     
     public void afterPropertiesSet() throws Exception {
-        //		registryMap.put("redis", new RedisRegistry());
+        
     }
     
     public String getProtocol() {
